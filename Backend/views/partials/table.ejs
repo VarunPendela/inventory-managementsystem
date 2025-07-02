@@ -1,0 +1,37 @@
+<% if (!records || records.length === 0) { %>
+  <p>No <%= type %> records found.</p>
+<% } else { %>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <% Object.keys(records[0]).forEach(key => { %>
+          <th><%= key %></th>
+          <% if (key === 'id') { %><th>Actions</th><% } %>
+        <% }); %>
+      </tr>
+    </thead>
+    <tbody>
+      <% records.forEach(row => { %>
+        <tr>
+          <% Object.entries(row).forEach(([key, value]) => { %>
+            <td><%= value %></td>
+            <% if (key === 'id') { %>
+  <td>
+    <% if (type === 'purchases') { %>
+      <a href="/purchases/edit/<%= value %>">✏️ Edit</a>
+      |
+      <a href="/purchases/delete/<%= value %>" onclick="return confirm('Are you sure you want to delete this purchase?')">🗑️ Delete</a>
+    <% } else if (type === 'sales') { %>
+      <a href="/sales/edit/<%= value %>">✏️ Edit</a>
+      |
+      <a href="/sales/delete/<%= value %>" onclick="return confirm('Are you sure you want to delete this sale?')">🗑️ Delete</a>
+    <% } %>
+  </td>
+<% } %>
+
+          <% }); %>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+<% } %>
