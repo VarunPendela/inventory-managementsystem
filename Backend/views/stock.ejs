@@ -1,0 +1,46 @@
+<%- include('partials/header', { title: 'Stock Management' }) %>
+
+<h2 class="text-xl font-bold mb-4">📦 Current Stock</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Unit Price (₹)</th>
+      <th>Add More</th>
+    </tr>
+  </thead>
+   <h3 class="text-lg font-semibold mt-10 mb-2">➕ Add New Product</h3>
+  <form method="POST" action="/stock/new" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 2rem;">
+  <input type="text" name="name" placeholder="Product name" required>
+  <input type="number" name="stock" placeholder="Initial stock" min="0" required>
+  <input type="number" name="unit_price" placeholder="Unit Price (₹)" step="0.01" required>
+  <button type="submit" class="bg-green-600 text-white px-3 py-1 rounded">➕ Add Product</button>
+</form>
+  <tbody>
+    
+    <% products.forEach(prod => { %>
+      <tr>
+        <td><%= prod.name %></td>
+        <td><%= prod.stock %></td>
+        <td>₹<%= parseFloat(prod.unit_price).toFixed(2) %></td>
+        <td>
+          <form method="POST" action="/stock/add" style="display: flex; gap: 5px;">
+            <input type="hidden" name="product_id" value="<%= prod.id %>">
+            <input type="number" name="added_quantity" min="1" required style="width: 60px;">
+            <button type="submit">➕ Add</button>
+          </form>
+        </td>
+      </tr>
+     
+
+
+
+    <% }) %>
+  </tbody>
+</table>
+
+<a href="/home" class="text-sm text-gray-600 underline mt-6 inline-block">← Back to Dashboard</a>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,116 @@
+<%- include('partials/header', { title: 'Home' }) %>
+
+<h2 class="text-2xl font-bold mb-4">Welcome, <%= user.name %> 👋</h2>
+
+<div class="flex gap-4 mb-6">
+  <button onclick="showSection('today')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Today</button>
+  <button onclick="showSection('weekly')" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Weekly</button>
+  <button onclick="showSection('monthly')" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">Monthly</button>
+</div>
+<div class="max-w-md mb-6 transition-transform duration-300 hover:scale-105">
+  <canvas id="revenueChart" height="200"></canvas>
+</div>
+<!-- Chart section -->
+<div class="max-w-md mb-6">
+  <canvas id="summaryChart" height="200"></canvas>
+</div>
+
+<!-- Export Buttons -->
+<div class="flex flex-wrap gap-4 mb-6">
+  <a href="/export/sales/today">
+    <button class="bg-blue-100 border border-blue-500 text-blue-800 px-3 py-2 rounded hover:bg-blue-200">⬇️ Download Today’s Sales</button>
+  </a>
+  <a href="/export/purchases/today">
+    <button class="bg-green-100 border border-green-500 text-green-800 px-3 py-2 rounded hover:bg-green-200">⬇️ Download Today’s Purchases</button>
+  </a>
+</div>
+
+<!-- Data Sections -->
+<div id="today" class="data-section">
+  <h3 class="text-xl font-semibold mb-2">📅 Today's Sales</h3>
+  <%- include('partials/table', { records: todaySales, type: 'sales' }) %>
+
+  <h3 class="text-xl font-semibold mt-6 mb-2">📦 Today's Purchases</h3>
+  <%- include('partials/table', { records: todayPurchases, type: 'purchases' }) %>
+</div>
+
+<div id="weekly" class="data-section hidden">
+  <h3 class="text-xl font-semibold mb-2">📅 Weekly Sales</h3>
+  <%- include('partials/table', { records: weeklySales, type: 'sales' }) %>
+
+  <h3 class="text-xl font-semibold mt-6 mb-2">📦 Weekly Purchases</h3>
+  <%- include('partials/table', { records: weeklyPurchases, type: 'purchases' }) %>
+</div>
+
+<div id="monthly" class="data-section hidden">
+  <h3 class="text-xl font-semibold mb-2">📅 Monthly Sales</h3>
+  <%- include('partials/table', { records: monthlySales, type: 'sales' }) %>
+
+  <h3 class="text-xl font-semibold mt-6 mb-2">📦 Monthly Purchases</h3>
+  <%- include('partials/table', { records: monthlyPurchases, type: 'purchases' }) %>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+  const ctx = document.getElementById('summaryChart').getContext('2d');
+
+  const summaryChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Sales (₹)', 'Purchases (₹)'],
+      datasets: [{
+        label: 'Today Amount',
+        data: [<%= saleAmount %>, <%= purchaseAmount %>],
+        backgroundColor: ['#3b82f6', '#10b981'],
+        hoverOffset: 10
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+      }
+    }
+  });
+</script>
+<script>
+  const revenueChart = new Chart(document.getElementById('revenueChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Today', 'Weekly', 'Monthly'],
+      datasets: [{
+        label: 'Net Revenue (₹)',
+        data: [<%= revenueToday %>, <%= revenueWeek %>, <%= revenueMonth %>],
+        backgroundColor: ['#0ea5e9', '#10b981', '#6366f1'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => '₹' + value
+          }
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll(".data-section").forEach(section => {
+      section.classList.add("hidden");
+    });
+    document.getElementById(id).classList.remove("hidden");
+  }
+
+  // Chart setup (if you're using Chart.js with summaryChart)
+</script>
+
+<%- include('partials/footer') %>

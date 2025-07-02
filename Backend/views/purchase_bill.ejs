@@ -1,0 +1,45 @@
+<%- include('partials/header', { title: 'Purchase Invoice' }) %>
+
+<div class="max-w-2xl mx-auto bg-white shadow p-6 mt-6 rounded">
+  <div class="text-center mb-4">
+    <h1 class="text-2xl font-bold text-gray-800">📦 Purchase Invoice</h1>
+    <h2 class="text-lg text-gray-500">Your Business Name</h2>
+    <p class="text-sm text-gray-400">123 Market Road, Andhra Pradesh • Phone: +91 XXXXX XXXXX</p>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="mb-4">
+    <p><strong>Bill Number:</strong> <%= purchase.bill_number || 'N/A' %></p>
+    <p><strong>Date:</strong> <%= new Date(purchase.date).toLocaleDateString() %></p>
+    <p><strong>Supplier:</strong> <%= purchase.supplier %></p>
+  </div>
+
+  <div class="mb-6">
+    <table class="w-full text-left border border-gray-300">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Product</th>
+          <th class="p-2 border">Quantity</th>
+          <th class="p-2 border">Rate</th>
+          <th class="p-2 border">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="p-2 border"><%= purchase.product_name %></td>
+          <td class="p-2 border"><%= purchase.quantity %></td>
+          <td class="p-2 border">₹<%= purchase.price_per_unit %></td>
+          <td class="p-2 border font-semibold text-blue-700">₹<%= purchase.quantity * purchase.price_per_unit %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-right mt-6">
+    <button onclick="window.print()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">🖨️ Print</button>
+    <a href="/home" class="ml-4 text-sm text-gray-600 underline">← Back to Dashboard</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

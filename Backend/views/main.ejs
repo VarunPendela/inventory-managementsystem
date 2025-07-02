@@ -1,0 +1,35 @@
+<%- include('partials/header', { title: 'Inventory Intel' }) %>
+
+<!-- Optional video background -->
+<div class="relative h-screen overflow-hidden bg-black">
+  <video autoplay muted loop class="absolute w-full h-full object-cover opacity-30">
+    <source src="Backend\views\videos\inventory.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4">
+    <h1 class="text-5xl font-extrabold mb-4 animate-bounce tracking-wide">
+      INVENTORY INTEL
+    </h1>
+
+    <p class="text-lg max-w-2xl mb-8">
+      A complete inventory & business management system. Track your sales, purchases, wages, commissions & receivables – all in one place.
+    </p>
+
+    <div class="flex gap-6">
+      <a href="/login"
+         class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded shadow text-white text-lg font-semibold transition">
+        Login
+      </a>
+      <a href="/register"
+         class="bg-green-600 hover:bg-green-700 px-6 py-2 rounded shadow text-white text-lg font-semibold transition">
+        Register
+      </a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

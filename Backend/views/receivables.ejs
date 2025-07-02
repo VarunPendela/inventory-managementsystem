@@ -1,0 +1,54 @@
+<%- include('partials/header', { title: 'Accounts Receivable' }) %>
+
+<div class="max-w-5xl mx-auto mt-10 bg-white shadow-md rounded p-6">
+  <h2 class="text-2xl font-bold mb-6 text-blue-700 text-center">Accounts Receivable</h2>
+
+  <div class="overflow-x-auto">
+    <table class="w-full table-auto border border-gray-300">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="border px-4 py-2">Customer</th>
+          <th class="border px-4 py-2">Sale ID</th>
+          <th class="border px-4 py-2">Amount Due</th>
+          <th class="border px-4 py-2">Due Date</th>
+          <th class="border px-4 py-2">Status</th>
+          <th class="border px-4 py-2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% receivables.forEach(row => { %>
+          <tr class="text-center">
+            <td class="border px-4 py-2"><%= row.customer_name %></td>
+            <td class="border px-4 py-2"><%= row.sale_id %></td>
+            <td class="border px-4 py-2 text-red-600 font-semibold">₹<%= row.amount_due %></td>
+            <td class="border px-4 py-2"><%= row.due_date.toISOString().split('T')[0] %></td>
+            <td class="border px-4 py-2"><%= row.status %></td>
+            <td class="border px-4 py-2">
+              <% if (row.status === 'Unpaid') { %>
+                <form method="POST" action="/receivables/pay" class="flex flex-col sm:flex-row items-center gap-2">
+                  <input type="hidden" name="id" value="<%= row.id %>">
+                  <input type="number" name="paid_amount" step="0.01" min="0" max="<%= row.amount_due %>" required
+                         class="px-2 py-1 border rounded w-24 text-sm" />
+                  <button type="submit"
+                          class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
+                    Submit
+                  </button>
+                  
+
+                </form>
+              <% } else { %>
+                <span class="text-green-600 font-bold">✅ Paid</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-6 text-center">
+    <a href="/home" class="text-blue-600 hover:underline">← Back to Dashboard</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

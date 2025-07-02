@@ -1,0 +1,48 @@
+<%- include('partials/header', { title: 'Add Purchase' }) %>
+
+<div class="max-w-xl mx-auto mt-10 bg-white shadow-md rounded p-6">
+  <h2 class="text-2xl font-bold mb-6 text-center text-green-700">Add Purchase</h2>
+
+  <form method="POST" action="/purchases" class="space-y-4">
+    <div>
+      <label class="block font-medium mb-1">Supplier Name</label>
+      <input type="text" name="supplier_name" required
+        class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <div>
+      <label class="block font-medium mb-1">Bill Number</label>
+      <input type="text" name="bill_number" required
+        class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <div>
+      <label class="block font-medium mb-1">Product Name</label>
+      <input type="text" name="product_name" required
+        class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <div>
+      <label class="block font-medium mb-1">Product ID</label>
+      <input type="number" name="product_id" required
+        class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <div>
+      <label class="block font-medium mb-1">Quantity</label>
+      <input type="number" name="quantity" required
+        class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <div>
+      <label class="block font-medium mb-1">Price per Unit</label>
+      <input type="number" name="price_per_unit" required
+        class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <button type="submit"
+      class="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition">Save Purchase</button>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,39 @@
+<%- include('partials/header', { title: 'Customer Bill' }) %>
+
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow">
+  <h2 class="text-2xl font-bold mb-4">🧾 Invoice for Customer: <%= customer %></h2>
+  <p class="text-sm text-gray-500 mb-6">Date: <%= new Date().toLocaleDateString() %></p>
+
+  <table class="w-full text-left border border-gray-300 mb-4">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="p-2 border">Product</th>
+        <th class="p-2 border">Qty</th>
+        <th class="p-2 border">Rate (₹)</th>
+        <th class="p-2 border">Total (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sales.forEach(item => { %>
+        <tr>
+          <td class="p-2 border"><%= item.product_name %></td>
+          <td class="p-2 border"><%= item.quantity %></td>
+          <td class="p-2 border"><%= parseFloat(item.price_per_unit).toFixed(2) %></td>
+<td class="p-2 border"><%= (item.quantity * parseFloat(item.price_per_unit)).toFixed(2) %></td>
+
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <div class="text-right font-semibold text-lg">
+    Total: ₹<%= total.toFixed(2) %>
+  </div>
+
+  <div class="mt-6 text-right">
+    <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">🖨️ Print Bill</button>
+    <a href="/home" class="ml-4 text-sm text-gray-600 underline">← Back to Dashboard</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

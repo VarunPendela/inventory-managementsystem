@@ -1,0 +1,18 @@
+<%- include('partials/header', { title: 'Generate Bill' }) %>
+
+<div class="max-w-md mx-auto mt-10">
+  <form method="POST" action="/bill">
+    <label>Choose Type:</label><br/>
+    <select name="type" class="w-full p-2 border mt-2 mb-4">
+      <option value="customer">Customer</option>
+      <option value="supplier">Supplier</option>
+    </select>
+
+    <label>Enter Name:</label><br/>
+    <input type="text" name="name" class="w-full p-2 border mt-2 mb-4" required>
+
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Generate Bill</button>
+  </form>
+</div>
+
+<%- include('partials/footer') %>
